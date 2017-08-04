@@ -1,0 +1,276 @@
+f4946ed58916394539223458f9085a96508494e0 1 1 23
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	# Git Blame
+f4946ed58916394539223458f9085a96508494e0 2 2
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	
+f4946ed58916394539223458f9085a96508494e0 3 3
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	This is a simple Go wrapper around the `git blame` command to provide a simple API for interacting with blame data.
+f4946ed58916394539223458f9085a96508494e0 4 4
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	
+f4946ed58916394539223458f9085a96508494e0 5 5
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	## Install
+f4946ed58916394539223458f9085a96508494e0 6 6
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	
+f4946ed58916394539223458f9085a96508494e0 7 7
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	```shell
+f4946ed58916394539223458f9085a96508494e0 8 8
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	go get -u github.com/jhaynie/gitblame
+f4946ed58916394539223458f9085a96508494e0 9 9
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	```
+f4946ed58916394539223458f9085a96508494e0 10 10
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	
+f4946ed58916394539223458f9085a96508494e0 11 11
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	## Usage
+f4946ed58916394539223458f9085a96508494e0 12 12
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	
+f4946ed58916394539223458f9085a96508494e0 13 13
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	Call the `Generate` method with the git repository directory, the commit SHA, the filename and a callback implementation.
+f4946ed58916394539223458f9085a96508494e0 14 14
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	
+f4946ed58916394539223458f9085a96508494e0 15 15
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	```golang
+f4946ed58916394539223458f9085a96508494e0 16 16
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	callback := func(line BlameLine) error {
+f4946ed58916394539223458f9085a96508494e0 17 17
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+		// TODO: do something with the content
+f4946ed58916394539223458f9085a96508494e0 18 18
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+		return nil
+f4946ed58916394539223458f9085a96508494e0 19 19
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	}
+f4946ed58916394539223458f9085a96508494e0 20 20
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	if err := Generate(dir, sha, filename, callback); err != nil {
+f4946ed58916394539223458f9085a96508494e0 21 21
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+		// TODO: handle the error
+f4946ed58916394539223458f9085a96508494e0 22 22
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	}
+f4946ed58916394539223458f9085a96508494e0 23 23
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1501819535
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1501819535
+committer-tz -0700
+summary initial commit
+filename README.md
+	```

@@ -13,12 +13,13 @@ func TestBlame(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer f.Close()
 	lines := make([]BlameLine, 0)
 	callback := func(line BlameLine) error {
 		lines = append(lines, line)
 		return nil
 	}
-	if err := GenerateOutput(f, callback); err != nil {
+	if err := GenerateOutput(f, callback, nil); err != nil {
 		t.Fatal(err)
 	}
 	expected := []string{
@@ -105,6 +106,62 @@ func TestBlame(t *testing.T) {
 	}
 }
 
+func TestBlameWithWriter(t *testing.T) {
+	f, err := os.Open("./testdata/test.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+	callback := func(line BlameLine) error {
+		return nil
+	}
+	var w bytes.Buffer
+	if err := GenerateOutput(f, callback, &w); err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+	f, err = os.Open("./testdata/test.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+	buf, err := ioutil.ReadAll(f)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(buf) != w.String() {
+		t.Fatal("expected output to writer didn't match input")
+	}
+}
+
+func TestBlameFromRepo(t *testing.T) {
+	f, err := os.Open("./testdata/test2.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+	callback := func(line BlameLine) error {
+		return nil
+	}
+	var w bytes.Buffer
+	if err := Generate(".", "f4946ed58916394539223458f9085a96508494e0", "README.md", callback, &w); err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+	f, err = os.Open("./testdata/test2.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+	buf, err := ioutil.ReadAll(f)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(buf) != w.String() {
+		t.Fatal("expected output to writer didn't match input")
+	}
+}
+
 func BenchmarkBlame(b *testing.B) {
 	f, err := os.Open("./testdata/test.txt")
 	if err != nil {
@@ -115,7 +172,23 @@ func BenchmarkBlame(b *testing.B) {
 		return nil
 	}
 	for n := 0; n < b.N; n++ {
-		if err := GenerateOutput(f, callback); err != nil {
+		if err := GenerateOutput(f, callback, nil); err != nil {
+			b.Fatal(err)
+		}
+	}
+}
+
+func BenchmarkBlameExec(b *testing.B) {
+	f, err := os.Open("./testdata/test2.txt")
+	if err != nil {
+		b.Fatal(err)
+	}
+	defer f.Close()
+	callback := func(line BlameLine) error {
+		return nil
+	}
+	for n := 0; n < b.N; n++ {
+		if err := Generate(".", "f4946ed58916394539223458f9085a96508494e0", "README.md", callback, nil); err != nil {
 			b.Fatal(err)
 		}
 	}

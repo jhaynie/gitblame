@@ -3,6 +3,7 @@ package gitblame
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"io"
 	"os/exec"
 	"strconv"
@@ -24,11 +25,12 @@ var (
 	authorPrefix     = []byte("author ")
 	authorMailPrefix = []byte("author-mail ")
 	authorTimePrefix = []byte("author-time ")
+	eol              = []byte("\n")
 )
 
 // GenerateOutput will take in a reader that's already in the correct blame output
 // and return each line of the blame entry to callback
-func GenerateOutput(r io.Reader, callback Callback) error {
+func GenerateOutput(r io.Reader, callback Callback, writer io.Writer) error {
 	lr := bufio.NewReader(r)
 	var current BlameLine
 	for {
@@ -38,6 +40,16 @@ func GenerateOutput(r io.Reader, callback Callback) error {
 		}
 		if err != nil {
 			return nil
+		}
+		if writer != nil {
+			_, err := writer.Write(buf)
+			if err != nil {
+				return fmt.Errorf("error writing buffer to output. %v", err)
+			}
+			_, err = writer.Write(eol)
+			if err != nil {
+				return fmt.Errorf("error writing buffer to output. %v", err)
+			}
 		}
 		if bytes.HasPrefix(buf, authorPrefix) {
 			current = BlameLine{
@@ -62,7 +74,9 @@ func GenerateOutput(r io.Reader, callback Callback) error {
 }
 
 // Generate will generate blame detail for a specific commit sha and filename
-func Generate(dir string, sha string, filename string, callback Callback) error {
+// writer is an optional (set to nil if not needed) io.Writer that will stream the output
+// of blame to cache the result for later usage with GenerateOutput
+func Generate(dir string, sha string, filename string, callback Callback, writer io.Writer) error {
 	cmd := exec.Command("git", "blame", sha, filename, "-e", "--root", "-w", "-t", "--line-porcelain")
 	cmd.Dir = dir
 	r, err := cmd.StdoutPipe()
@@ -73,5 +87,5 @@ func Generate(dir string, sha string, filename string, callback Callback) error 
 	if err := cmd.Start(); err != nil {
 		return err
 	}
-	return GenerateOutput(r, callback)
+	return GenerateOutput(r, callback, writer)
 }

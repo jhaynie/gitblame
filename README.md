@@ -17,7 +17,7 @@ callback := func(line BlameLine) error {
 	// TODO: do something with the content
 	return nil
 }
-if err := Generate(dir, sha, filename, callback); err != nil {
+if err := Generate(dir, sha, filename, callback, nil); err != nil {
 	// TODO: handle the error
 }
 ```
