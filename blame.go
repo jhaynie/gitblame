@@ -28,10 +28,13 @@ var (
 	eol              = []byte("\n")
 )
 
+// the maximum of one line of output. testing with 1K which seems OK
+const maxLineSize = 1024
+
 // GenerateOutput will take in a reader that's already in the correct blame output
 // and return each line of the blame entry to callback
 func GenerateOutput(r io.Reader, callback Callback, writer io.Writer) error {
-	lr := bufio.NewReader(r)
+	lr := bufio.NewReaderSize(r, maxLineSize)
 	var current BlameLine
 	for {
 		buf, _, err := lr.ReadLine()
@@ -52,9 +55,7 @@ func GenerateOutput(r io.Reader, callback Callback, writer io.Writer) error {
 			}
 		}
 		if bytes.HasPrefix(buf, authorPrefix) {
-			current = BlameLine{
-				Name: string(buf[7:]),
-			}
+			current.Name = string(buf[7:])
 		} else if bytes.HasPrefix(buf, authorMailPrefix) {
 			current.Email = string(buf[13 : len(buf)-1])
 		} else if bytes.HasPrefix(buf, authorTimePrefix) {

@@ -12,4 +12,4 @@ jobs:
     steps:
       - checkout
       - run: go test -v ./...
-      - run: go test -v -bench=.
+      - run: go test -v -bench=. -test.benchmem
