@@ -11,5 +11,4 @@ jobs:
     working_directory: /go/src/github.com/jhaynie/gitblame
     steps:
       - checkout
-      - run: go test -v ./...
       - run: go test -v -bench=. -test.benchmem
