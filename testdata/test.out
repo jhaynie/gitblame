@@ -1,0 +1,56 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: jhaynie/golang-1.8
+      - image: mysql
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: pinpoint3
+      - image: pinpt/linguist
+      - image: rabbitmq:3.6.7
+
+    working_directory: /go/src/github.com/pinpt/worker
+
+    environment:
+      TEST_RESULTS: /tmp/test-results
+      PP_DBNAME: pinpoint3
+      PP_LINGUIST_URL: https://localhost:25032
+
+    steps:
+      - checkout
+
+      - run: sudo apt-get install -y libssh2-1-dev
+
+      - run: make libgit
+
+      - run: make blame
+
+      - run: mkdir -p $TEST_RESULTS
+
+      - run:
+          name: Waiting for MySQL to be ready
+          command: |
+            for i in `seq 1 60`;
+            do
+              nc -z localhost 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Importing schema
+          command: go run -tags static main.go migrate up
+
+      - run:
+          name: Running Unit Tests
+          command: |
+            trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
+            make ci-test
+
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: raw-test-output
+
+      - store_test_results:
+          path: /tmp/test-results

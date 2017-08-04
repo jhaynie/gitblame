@@ -1,0 +1,681 @@
+0aee2a1cfed196bccba374e875657077daa08c6f 1 1 12
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	version: 2
+0aee2a1cfed196bccba374e875657077daa08c6f 2 2
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	jobs:
+0aee2a1cfed196bccba374e875657077daa08c6f 3 3
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	  build:
+0aee2a1cfed196bccba374e875657077daa08c6f 4 4
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	    docker:
+0aee2a1cfed196bccba374e875657077daa08c6f 5 5
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - image: jhaynie/golang-1.8
+0aee2a1cfed196bccba374e875657077daa08c6f 6 6
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - image: mysql
+0aee2a1cfed196bccba374e875657077daa08c6f 7 7
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	        environment:
+0aee2a1cfed196bccba374e875657077daa08c6f 8 8
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          MYSQL_ALLOW_EMPTY_PASSWORD: true
+0aee2a1cfed196bccba374e875657077daa08c6f 9 9
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          MYSQL_DATABASE: pinpoint3
+0aee2a1cfed196bccba374e875657077daa08c6f 10 10
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - image: pinpt/linguist
+0aee2a1cfed196bccba374e875657077daa08c6f 11 11
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - image: rabbitmq:3.6.7
+0aee2a1cfed196bccba374e875657077daa08c6f 12 12
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	
+a6b430be36eb3682024d9432e8691324de478ac5 13 13 1
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945616
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945616
+committer-tz -0700
+summary fixed circleci directory name
+previous 0aee2a1cfed196bccba374e875657077daa08c6f .circleci/config.yml
+filename .circleci/config.yml
+	    working_directory: /go/src/github.com/pinpt/worker
+0aee2a1cfed196bccba374e875657077daa08c6f 14 14 9
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	
+0aee2a1cfed196bccba374e875657077daa08c6f 15 15
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	    environment:
+0aee2a1cfed196bccba374e875657077daa08c6f 16 16
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      TEST_RESULTS: /tmp/test-results
+0aee2a1cfed196bccba374e875657077daa08c6f 17 17
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      PP_DBNAME: pinpoint3
+0aee2a1cfed196bccba374e875657077daa08c6f 18 18
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      PP_LINGUIST_URL: https://localhost:25032
+0aee2a1cfed196bccba374e875657077daa08c6f 19 19
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	
+0aee2a1cfed196bccba374e875657077daa08c6f 20 20
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	    steps:
+0aee2a1cfed196bccba374e875657077daa08c6f 21 21
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - checkout
+0aee2a1cfed196bccba374e875657077daa08c6f 22 22
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	
+4642902ef376c95e64e653931594ac6a094be5f1 23 23 2
+author Robindiddams
+author-mail <robindiddams@gmail.com>
+author-time 1499462200
+author-tz -0700
+committer Robindiddams
+committer-mail <robindiddams@gmail.com>
+committer-time 1499462200
+committer-tz -0700
+summary CircleCi: install libssh2 for build
+previous 4950ea425b3127e8e3dec2dcf5cd20f240fa3938 .circleci/config.yml
+filename .circleci/config.yml
+	      - run: sudo apt-get install -y libssh2-1-dev
+4642902ef376c95e64e653931594ac6a094be5f1 24 24
+author Robindiddams
+author-mail <robindiddams@gmail.com>
+author-time 1499462200
+author-tz -0700
+committer Robindiddams
+committer-mail <robindiddams@gmail.com>
+committer-time 1499462200
+committer-tz -0700
+summary CircleCi: install libssh2 for build
+previous 4950ea425b3127e8e3dec2dcf5cd20f240fa3938 .circleci/config.yml
+filename .circleci/config.yml
+	
+83dbea2877d8e2f933af85a40ec4ef7221a950f9 23 25 1
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1498034924
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1498034924
+committer-tz -0700
+summary circleci: run build before attempt to run migrate
+previous 49e3500936f6a17ce0d2893c684c9d927ff088a5 .circleci/config.yml
+filename .circleci/config.yml
+	      - run: make libgit
+49e3500936f6a17ce0d2893c684c9d927ff088a5 24 26 1
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1498034865
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1498034865
+committer-tz -0700
+summary circleci: run build before attempt to run migrate
+previous 78e08ae3a8e78feadfc0a774d446743b53e76557 .circleci/config.yml
+filename .circleci/config.yml
+	
+1948ed22910687b138a22f0f3d00bdbff88580d9 25 27 2
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1499016799
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1499016799
+committer-tz -0700
+summary circleci: run blame after libgit
+previous 4601117999ed41c0e20c9320099935157669ccd7 .circleci/config.yml
+filename .circleci/config.yml
+	      - run: make blame
+1948ed22910687b138a22f0f3d00bdbff88580d9 26 28
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1499016799
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1499016799
+committer-tz -0700
+summary circleci: run blame after libgit
+previous 4601117999ed41c0e20c9320099935157669ccd7 .circleci/config.yml
+filename .circleci/config.yml
+	
+0aee2a1cfed196bccba374e875657077daa08c6f 23 29 14
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - run: mkdir -p $TEST_RESULTS
+0aee2a1cfed196bccba374e875657077daa08c6f 24 30
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	
+0aee2a1cfed196bccba374e875657077daa08c6f 25 31
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - run:
+0aee2a1cfed196bccba374e875657077daa08c6f 26 32
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          name: Waiting for MySQL to be ready
+0aee2a1cfed196bccba374e875657077daa08c6f 27 33
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          command: |
+0aee2a1cfed196bccba374e875657077daa08c6f 28 34
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	            for i in `seq 1 60`;
+0aee2a1cfed196bccba374e875657077daa08c6f 29 35
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	            do
+0aee2a1cfed196bccba374e875657077daa08c6f 30 36
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	              nc -z localhost 3306 && echo Success && exit 0
+0aee2a1cfed196bccba374e875657077daa08c6f 31 37
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	              echo -n .
+0aee2a1cfed196bccba374e875657077daa08c6f 32 38
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	              sleep 1
+0aee2a1cfed196bccba374e875657077daa08c6f 33 39
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	            done
+0aee2a1cfed196bccba374e875657077daa08c6f 34 40
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	            echo Failed waiting for MySQL && exit 1
+0aee2a1cfed196bccba374e875657077daa08c6f 35 41
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - run:
+0aee2a1cfed196bccba374e875657077daa08c6f 36 42
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          name: Importing schema
+78e08ae3a8e78feadfc0a774d446743b53e76557 37 43 1
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1498034722
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1498034722
+committer-tz -0700
+summary more cross platform build fixes which convert to using statically compiled version of libgit2/git2go
+previous 611e215eb3842c7b553866e8dd110a75374ca817 .circleci/config.yml
+filename .circleci/config.yml
+	          command: go run -tags static main.go migrate up
+0aee2a1cfed196bccba374e875657077daa08c6f 38 44 5
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	
+0aee2a1cfed196bccba374e875657077daa08c6f 39 45
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - run:
+0aee2a1cfed196bccba374e875657077daa08c6f 40 46
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          name: Running Unit Tests
+0aee2a1cfed196bccba374e875657077daa08c6f 41 47
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          command: |
+0aee2a1cfed196bccba374e875657077daa08c6f 42 48
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	            trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
+024f79160baf57674e674bad804e1f7b1c493fea 43 49 1
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1493350927
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1493350927
+committer-tz -0700
+summary more deployment related fixes
+previous 98ebc1c6e7cbf42b2003f22397c44187c0e23beb .circleci/config.yml
+filename .circleci/config.yml
+	            make ci-test
+0aee2a1cfed196bccba374e875657077daa08c6f 44 50 7
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	
+0aee2a1cfed196bccba374e875657077daa08c6f 45 51
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - store_artifacts:
+0aee2a1cfed196bccba374e875657077daa08c6f 46 52
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          path: /tmp/test-results
+0aee2a1cfed196bccba374e875657077daa08c6f 47 53
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          destination: raw-test-output
+0aee2a1cfed196bccba374e875657077daa08c6f 48 54
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	
+0aee2a1cfed196bccba374e875657077daa08c6f 49 55
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	      - store_test_results:
+0aee2a1cfed196bccba374e875657077daa08c6f 50 56
+author Jeff Haynie
+author-mail <jhaynie@gmail.com>
+author-time 1491945467
+author-tz -0700
+committer Jeff Haynie
+committer-mail <jhaynie@gmail.com>
+committer-time 1491945467
+committer-tz -0700
+summary initial check-in of refactor
+filename .circleci/config.yml
+	          path: /tmp/test-results
