@@ -1,4 +1,4 @@
-# Git Blame
+# Git Blame [![CircleCI](https://circleci.com/gh/jhaynie/gitblame.svg?style=svg)](https://circleci.com/gh/jhaynie/gitblame)
 
 This is a simple Go wrapper around the `git blame` command to provide a simple API for interacting with blame data.
 
