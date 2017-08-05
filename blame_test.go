@@ -162,6 +162,18 @@ func TestBlameFromRepo(t *testing.T) {
 	}
 }
 
+func TestBlameFinishes(t *testing.T) {
+	callback := func(line BlameLine) error {
+		return nil
+	}
+	// 1k should be sufficient on most machines to run out of process resources if not cleaning up
+	for i := 0; i < 1000; i++ {
+		if err := Generate(".", "f4946ed58916394539223458f9085a96508494e0", "README.md", callback, nil); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
 func BenchmarkBlame(b *testing.B) {
 	f, err := os.Open("./testdata/test.txt")
 	if err != nil {

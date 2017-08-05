@@ -82,11 +82,17 @@ func Generate(dir string, sha string, filename string, callback Callback, writer
 	cmd.Dir = dir
 	r, err := cmd.StdoutPipe()
 	if err != nil {
+		cmd.Process.Kill()
 		return err
 	}
 	defer r.Close()
 	if err := cmd.Start(); err != nil {
 		return err
 	}
-	return GenerateOutput(r, callback, writer)
+	if err := GenerateOutput(r, callback, writer); err != nil {
+		cmd.Process.Kill()
+		return err
+	}
+	r.Close()
+	return cmd.Wait()
 }
