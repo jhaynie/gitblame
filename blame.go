@@ -78,7 +78,7 @@ func GenerateOutput(r io.Reader, callback Callback, writer io.Writer) error {
 // writer is an optional (set to nil if not needed) io.Writer that will stream the output
 // of blame to cache the result for later usage with GenerateOutput
 func Generate(dir string, sha string, filename string, callback Callback, writer io.Writer) error {
-	cmd := exec.Command("git", "blame", sha, filename, "-e", "--root", "-w", "-t", "--line-porcelain")
+	cmd := exec.Command("git", "blame", sha, "-e", "--root", "-w", "-t", "--line-porcelain", "--", filename)
 	cmd.Dir = dir
 	r, err := cmd.StdoutPipe()
 	if err != nil {
