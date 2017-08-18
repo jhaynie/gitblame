@@ -44,6 +44,9 @@ func GenerateOutput(r io.Reader, callback Callback, writer io.Writer) error {
 		if err != nil {
 			return nil
 		}
+		if buf == nil || len(buf) == 0 {
+			continue
+		}
 		if writer != nil {
 			_, err := writer.Write(buf)
 			if err != nil {
