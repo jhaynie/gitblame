@@ -5,8 +5,10 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"os"
 	"os/exec"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -81,7 +83,15 @@ func GenerateOutput(r io.Reader, callback Callback, writer io.Writer) error {
 // writer is an optional (set to nil if not needed) io.Writer that will stream the output
 // of blame to cache the result for later usage with GenerateOutput
 func Generate(dir string, sha string, filename string, callback Callback, writer io.Writer) error {
+	return generateWithRetry(dir, sha, filename, callback, writer, 1)
+}
+
+func generateWithRetry(dir string, sha string, filename string, callback Callback, writer io.Writer, count int) error {
+	if count > 3 {
+		return fmt.Errorf("tried to run git blame " + sha + " too many times and it failed on 3 retries")
+	}
 	cmd := exec.Command("git", "blame", sha, "-e", "--root", "-w", "-t", "--line-porcelain", "--", filename)
+	cmd.Stderr = os.Stderr
 	cmd.Dir = dir
 	r, err := cmd.StdoutPipe()
 	if err != nil {
@@ -90,10 +100,18 @@ func Generate(dir string, sha string, filename string, callback Callback, writer
 	}
 	defer r.Close()
 	if err := cmd.Start(); err != nil {
-		return err
+		if strings.Contains(err.Error(), "exit status") {
+			r.Close()
+			cmd.Wait()
+			// sleep a bit to backoff in case too many other processes or something like that..
+			time.Sleep(time.Millisecond * 100 * time.Duration(count))
+			return generateWithRetry(dir, sha, filename, callback, writer, count+1)
+		}
+		return fmt.Errorf("git blame %s exited with %s", sha, err.Error())
 	}
 	if err := GenerateOutput(r, callback, writer); err != nil {
-		cmd.Process.Kill()
+		r.Close()
+		cmd.Wait()
 		return err
 	}
 	r.Close()
