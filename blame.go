@@ -3,6 +3,7 @@ package gitblame
 import (
 	"bufio"
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"os"
@@ -35,16 +36,22 @@ const maxLineSize = 1024
 
 // GenerateOutput will take in a reader that's already in the correct blame output
 // and return each line of the blame entry to callback
-func GenerateOutput(r io.Reader, callback Callback, writer io.Writer) error {
+func GenerateOutput(ctx context.Context, r io.Reader, callback Callback, writer io.Writer) error {
 	lr := bufio.NewReaderSize(r, maxLineSize)
 	var current BlameLine
 	for {
 		buf, _, err := lr.ReadLine()
 		if err == io.EOF {
-			break
+			return nil
 		}
 		if err != nil {
+			return err
+		}
+		// make sure our context isn't done
+		select {
+		case <-ctx.Done():
 			return nil
+		default:
 		}
 		if buf == nil || len(buf) == 0 {
 			continue
@@ -76,27 +83,32 @@ func GenerateOutput(r io.Reader, callback Callback, writer io.Writer) error {
 			}
 		}
 	}
-	return nil
 }
 
 // Generate will generate blame detail for a specific commit sha and filename
 // writer is an optional (set to nil if not needed) io.Writer that will stream the output
 // of blame to cache the result for later usage with GenerateOutput
 func Generate(dir string, sha string, filename string, callback Callback, writer io.Writer) error {
-	return generateWithRetry(dir, sha, filename, callback, writer, 1)
+	return generateWithRetry(context.Background(), dir, sha, filename, callback, writer, 1)
 }
 
-func generateWithRetry(dir string, sha string, filename string, callback Callback, writer io.Writer, count int) error {
+// GenerateWithContext will generate blame detail for a specific commit sha and filename
+// writer is an optional (set to nil if not needed) io.Writer that will stream the output
+// of blame to cache the result for later usage with GenerateOutput
+func GenerateWithContext(ctx context.Context, dir string, sha string, filename string, callback Callback, writer io.Writer) error {
+	return generateWithRetry(ctx, dir, sha, filename, callback, writer, 1)
+}
+
+func generateWithRetry(ctx context.Context, dir string, sha string, filename string, callback Callback, writer io.Writer, count int) error {
 	if count > 3 {
-		return fmt.Errorf("tried to run git blame " + sha + " too many times and it failed on 3 retries")
+		return fmt.Errorf("tried to run git blame %v on %v (%v) too many times and it failed on 3 retries", sha, filename, dir)
 	}
-	cmd := exec.Command("git", "blame", sha, "-e", "--root", "-w", "-t", "--line-porcelain", "--", filename)
+	cmd := exec.CommandContext(ctx, "git", "blame", sha, "-e", "--root", "--line-porcelain", "--", filename)
 	cmd.Stderr = os.Stderr
 	cmd.Dir = dir
 	r, err := cmd.StdoutPipe()
 	if err != nil {
-		cmd.Process.Kill()
-		return err
+		return fmt.Errorf("error running blame in %v for %v (%v). %v", dir, sha, filename, err)
 	}
 	defer r.Close()
 	if err := cmd.Start(); err != nil {
@@ -105,11 +117,11 @@ func generateWithRetry(dir string, sha string, filename string, callback Callbac
 			cmd.Wait()
 			// sleep a bit to backoff in case too many other processes or something like that..
 			time.Sleep(time.Millisecond * 100 * time.Duration(count))
-			return generateWithRetry(dir, sha, filename, callback, writer, count+1)
+			return generateWithRetry(ctx, dir, sha, filename, callback, writer, count+1)
 		}
 		return fmt.Errorf("git blame %s exited with %s", sha, err.Error())
 	}
-	if err := GenerateOutput(r, callback, writer); err != nil {
+	if err := GenerateOutput(ctx, r, callback, writer); err != nil {
 		r.Close()
 		cmd.Wait()
 		return err

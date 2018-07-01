@@ -2,6 +2,7 @@ package gitblame
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -19,7 +20,8 @@ func TestBlame(t *testing.T) {
 		lines = append(lines, line)
 		return nil
 	}
-	if err := GenerateOutput(f, callback, nil); err != nil {
+	ctx := context.Background()
+	if err := GenerateOutput(ctx, f, callback, nil); err != nil {
 		t.Fatal(err)
 	}
 	expected := []string{
@@ -115,8 +117,9 @@ func TestBlameWithWriter(t *testing.T) {
 	callback := func(line BlameLine) error {
 		return nil
 	}
+	ctx := context.Background()
 	var w bytes.Buffer
-	if err := GenerateOutput(f, callback, &w); err != nil {
+	if err := GenerateOutput(ctx, f, callback, &w); err != nil {
 		t.Fatal(err)
 	}
 	f.Close()
@@ -162,6 +165,34 @@ func TestBlameFromRepo(t *testing.T) {
 	}
 }
 
+func TestBlameFromRepoWithContext(t *testing.T) {
+	f, err := os.Open("./testdata/test2.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+	callback := func(line BlameLine) error {
+		return nil
+	}
+	var w bytes.Buffer
+	if err := GenerateWithContext(context.Background(), ".", "f4946ed58916394539223458f9085a96508494e0", "README.md", callback, &w); err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+	f, err = os.Open("./testdata/test2.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+	buf, err := ioutil.ReadAll(f)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(buf) != w.String() {
+		t.Fatal("expected output to writer didn't match input")
+	}
+}
+
 func TestBlameFinishes(t *testing.T) {
 	callback := func(line BlameLine) error {
 		return nil
@@ -183,8 +214,9 @@ func BenchmarkBlame(b *testing.B) {
 	callback := func(line BlameLine) error {
 		return nil
 	}
+	ctx := context.Background()
 	for n := 0; n < b.N; n++ {
-		if err := GenerateOutput(f, callback, nil); err != nil {
+		if err := GenerateOutput(ctx, f, callback, nil); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -201,6 +233,23 @@ func BenchmarkBlameExec(b *testing.B) {
 	}
 	for n := 0; n < b.N; n++ {
 		if err := Generate(".", "f4946ed58916394539223458f9085a96508494e0", "README.md", callback, nil); err != nil {
+			b.Fatal(err)
+		}
+	}
+}
+
+func BenchmarkBlameExecWithContext(b *testing.B) {
+	f, err := os.Open("./testdata/test2.txt")
+	if err != nil {
+		b.Fatal(err)
+	}
+	defer f.Close()
+	callback := func(line BlameLine) error {
+		return nil
+	}
+	ctx := context.Background()
+	for n := 0; n < b.N; n++ {
+		if err := GenerateWithContext(ctx, ".", "f4946ed58916394539223458f9085a96508494e0", "README.md", callback, nil); err != nil {
 			b.Fatal(err)
 		}
 	}
