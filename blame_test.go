@@ -205,6 +205,19 @@ func TestBlameFinishes(t *testing.T) {
 	}
 }
 
+func TestBlameNoFileError(t *testing.T) {
+	callback := func(line BlameLine) error {
+		return nil
+	}
+	if err := Generate(".", "f4946ed58916394539223458f9085a96508494e0", "fooasdfasjdklfjasldfjaslkdjfalsjdflaksjd.fsh", callback, nil); err != nil {
+		if err.Error() != "fatal: no such path fooasdfasjdklfjasldfjaslkdjfalsjdflaksjd.fsh in f4946ed58916394539223458f9085a96508494e0" {
+			t.Fatalf("wrong error message. was %v", err)
+		}
+		return
+	}
+	t.Fatal("expected error but didn't have it")
+}
+
 func BenchmarkBlame(b *testing.B) {
 	f, err := os.Open("./testdata/test.txt")
 	if err != nil {

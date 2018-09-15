@@ -4,9 +4,9 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"io"
-	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -103,8 +103,10 @@ func generateWithRetry(ctx context.Context, dir string, sha string, filename str
 	if count > 3 {
 		return fmt.Errorf("tried to run git blame %v on %v (%v) too many times and it failed on 3 retries", sha, filename, dir)
 	}
+	// fmt.Println("git", "blame", sha, "-e", "--root", "--line-porcelain", "--", filename)
 	cmd := exec.CommandContext(ctx, "git", "blame", sha, "-e", "--root", "--line-porcelain", "--", filename)
-	cmd.Stderr = os.Stderr
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
 	cmd.Dir = dir
 	r, err := cmd.StdoutPipe()
 	if err != nil {
@@ -127,5 +129,13 @@ func generateWithRetry(ctx context.Context, dir string, sha string, filename str
 		return err
 	}
 	r.Close()
-	return cmd.Wait()
+	if err := cmd.Wait(); err != nil {
+		if strings.Contains(err.Error(), "exit status 128") {
+			if strings.Contains(stderr.String(), "no such path") {
+				return errors.New(strings.TrimSpace(stderr.String()))
+			}
+		}
+		return err
+	}
+	return nil
 }
