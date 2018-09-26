@@ -25,10 +25,9 @@ type BlameLine struct {
 type Callback func(line BlameLine) error
 
 var (
-	authorPrefix     = []byte("author ")
-	authorMailPrefix = []byte("author-mail ")
-	authorTimePrefix = []byte("author-time ")
-	eol              = []byte("\n")
+	authorPrefix     = "author "
+	authorMailPrefix = "author-mail "
+	authorTimePrefix = "author-time "
 )
 
 // the maximum of one line of output. testing with 1K which seems OK
@@ -36,15 +35,21 @@ const maxLineSize = 1024
 
 // GenerateOutput will take in a reader that's already in the correct blame output
 // and return each line of the blame entry to callback
-func GenerateOutput(ctx context.Context, r io.Reader, callback Callback, writer io.Writer) error {
+func GenerateOutput(ctx context.Context, r io.Reader, callback Callback, w io.Writer) error {
 	lr := bufio.NewReaderSize(r, maxLineSize)
+	s := bufio.NewScanner(lr)
+	var writer *bufio.Writer
+	if w != nil {
+		writer = bufio.NewWriter(w)
+		defer writer.Flush()
+	}
 	var current BlameLine
-	for {
-		buf, _, err := lr.ReadLine()
-		if err == io.EOF {
-			return nil
-		}
+	for s.Scan() {
+		err := s.Err()
 		if err != nil {
+			if strings.Contains(s.Err().Error(), "file already closed") {
+				break
+			}
 			return err
 		}
 		// make sure our context isn't done
@@ -53,24 +58,22 @@ func GenerateOutput(ctx context.Context, r io.Reader, callback Callback, writer 
 			return nil
 		default:
 		}
-		if buf == nil || len(buf) == 0 {
-			continue
-		}
+		buf := s.Text()
 		if writer != nil {
-			_, err := writer.Write(buf)
+			_, err := writer.WriteString(buf)
 			if err != nil {
 				return fmt.Errorf("error writing buffer to output. %v", err)
 			}
-			_, err = writer.Write(eol)
+			_, err = writer.WriteString("\n")
 			if err != nil {
 				return fmt.Errorf("error writing buffer to output. %v", err)
 			}
 		}
-		if bytes.HasPrefix(buf, authorPrefix) {
+		if strings.HasPrefix(buf, authorPrefix) {
 			current.Name = string(buf[7:])
-		} else if bytes.HasPrefix(buf, authorMailPrefix) {
+		} else if strings.HasPrefix(buf, authorMailPrefix) {
 			current.Email = string(buf[13 : len(buf)-1])
-		} else if bytes.HasPrefix(buf, authorTimePrefix) {
+		} else if strings.HasPrefix(buf, authorTimePrefix) {
 			i, err := strconv.ParseInt(string(buf[12:]), 10, 64)
 			if err != nil {
 				return err
@@ -83,6 +86,7 @@ func GenerateOutput(ctx context.Context, r io.Reader, callback Callback, writer 
 			}
 		}
 	}
+	return nil
 }
 
 // Generate will generate blame detail for a specific commit sha and filename
