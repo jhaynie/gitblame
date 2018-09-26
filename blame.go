@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -30,6 +31,25 @@ var (
 	authorTimePrefix = "author-time "
 )
 
+// buffer pool to reduce GC
+var bufferPool = sync.Pool{
+	// New is called when a new instance is needed
+	New: func() interface{} {
+		return bytes.NewBuffer(make([]byte, maxLineSize))
+	},
+}
+
+// getBuffer fetches a buffer from the pool
+func getBuffer() *bytes.Buffer {
+	return bufferPool.Get().(*bytes.Buffer)
+}
+
+// putBuffer returns a buffer to the pool
+func putBuffer(buf *bytes.Buffer) {
+	buf.Reset()
+	bufferPool.Put(buf)
+}
+
 // the maximum of one line of output. testing with 1K which seems OK
 const maxLineSize = 1024
 
@@ -38,6 +58,9 @@ const maxLineSize = 1024
 func GenerateOutput(ctx context.Context, r io.Reader, callback Callback, w io.Writer) error {
 	lr := bufio.NewReaderSize(r, maxLineSize)
 	s := bufio.NewScanner(lr)
+	buf := getBuffer()
+	defer putBuffer(buf)
+	s.Buffer(buf.Bytes(), maxLineSize)
 	var writer *bufio.Writer
 	if w != nil {
 		writer = bufio.NewWriter(w)
@@ -45,13 +68,6 @@ func GenerateOutput(ctx context.Context, r io.Reader, callback Callback, w io.Wr
 	}
 	var current BlameLine
 	for s.Scan() {
-		err := s.Err()
-		if err != nil {
-			if strings.Contains(s.Err().Error(), "file already closed") {
-				break
-			}
-			return err
-		}
 		// make sure our context isn't done
 		select {
 		case <-ctx.Done():
@@ -85,6 +101,13 @@ func GenerateOutput(ctx context.Context, r io.Reader, callback Callback, w io.Wr
 				return err
 			}
 		}
+	}
+	err := s.Err()
+	if err != nil {
+		if strings.Contains(s.Err().Error(), "file already closed") {
+			return nil
+		}
+		return err
 	}
 	return nil
 }
@@ -135,7 +158,6 @@ func generateWithRetry(ctx context.Context, dir string, sha string, filename str
 		cmd.Wait()
 		return err
 	}
-	r.Close()
 	if err := cmd.Wait(); err != nil {
 		if strings.Contains(err.Error(), "exit status 128") {
 			if strings.Contains(stderr.String(), "no such path") {
@@ -144,5 +166,6 @@ func generateWithRetry(ctx context.Context, dir string, sha string, filename str
 		}
 		return fmt.Errorf("git blame %s exited with %v. %v", sha, err, strings.TrimSpace(stderr.String()))
 	}
+	r.Close()
 	return nil
 }

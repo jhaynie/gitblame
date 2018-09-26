@@ -1,11 +1,13 @@
 package gitblame
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -212,6 +214,23 @@ func TestBlameNoFileError(t *testing.T) {
 	if err := Generate(".", "f4946ed58916394539223458f9085a96508494e0", "fooasdfasjdklfjasldfjaslkdjfalsjdflaksjd.fsh", callback, nil); err != nil {
 		if err.Error() != "fatal: no such path fooasdfasjdklfjasldfjaslkdjfalsjdflaksjd.fsh in f4946ed58916394539223458f9085a96508494e0" {
 			t.Fatalf("wrong error message. was %v", err)
+		}
+		return
+	}
+	t.Fatal("expected error but didn't have it")
+}
+
+func TestBlameLineTooLong(t *testing.T) {
+	callback := func(line BlameLine) error {
+		return nil
+	}
+	var buf strings.Builder
+	for i := 0; i <= maxLineSize; i++ {
+		buf.WriteString("x")
+	}
+	if err := GenerateOutput(context.Background(), strings.NewReader(buf.String()), callback, nil); err != nil {
+		if err != bufio.ErrTooLong {
+			t.Fatalf("expected bufio.ErrTooLong but received %v", err)
 		}
 		return
 	}
