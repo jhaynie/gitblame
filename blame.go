@@ -121,11 +121,14 @@ func generateWithRetry(ctx context.Context, dir string, sha string, filename str
 		if strings.Contains(err.Error(), "exit status") {
 			r.Close()
 			cmd.Wait()
+			if strings.Contains(stderr.String(), "no such path") {
+				return errors.New(strings.TrimSpace(stderr.String()))
+			}
 			// sleep a bit to backoff in case too many other processes or something like that..
 			time.Sleep(time.Millisecond * 100 * time.Duration(count))
 			return generateWithRetry(ctx, dir, sha, filename, callback, writer, count+1)
 		}
-		return fmt.Errorf("git blame %s exited with %s", sha, err.Error())
+		return fmt.Errorf("git blame %s exited with %s. %v", sha, err.Error(), strings.TrimSpace(stderr.String()))
 	}
 	if err := GenerateOutput(ctx, r, callback, writer); err != nil {
 		r.Close()
@@ -139,7 +142,7 @@ func generateWithRetry(ctx context.Context, dir string, sha string, filename str
 				return errors.New(strings.TrimSpace(stderr.String()))
 			}
 		}
-		return err
+		return fmt.Errorf("git blame %s exited with %v. %v", sha, err, strings.TrimSpace(stderr.String()))
 	}
 	return nil
 }
