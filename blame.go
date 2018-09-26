@@ -35,7 +35,7 @@ var (
 var bufferPool = sync.Pool{
 	// New is called when a new instance is needed
 	New: func() interface{} {
-		return bytes.NewBuffer(make([]byte, maxLineSize))
+		return bytes.NewBuffer(make([]byte, MaxLineSize))
 	},
 }
 
@@ -50,17 +50,17 @@ func putBuffer(buf *bytes.Buffer) {
 	bufferPool.Put(buf)
 }
 
-// the maximum of one line of output. testing with 1K which seems OK
-const maxLineSize = 1024
+// MaxLineSize is the maximum of one line of output. testing with 1K which seems OK
+var MaxLineSize = 1024
 
 // GenerateOutput will take in a reader that's already in the correct blame output
 // and return each line of the blame entry to callback
 func GenerateOutput(ctx context.Context, r io.Reader, callback Callback, w io.Writer) error {
-	lr := bufio.NewReaderSize(r, maxLineSize)
+	lr := bufio.NewReaderSize(r, MaxLineSize)
 	s := bufio.NewScanner(lr)
 	buf := getBuffer()
 	defer putBuffer(buf)
-	s.Buffer(buf.Bytes(), maxLineSize)
+	s.Buffer(buf.Bytes(), MaxLineSize)
 	var writer *bufio.Writer
 	if w != nil {
 		writer = bufio.NewWriter(w)

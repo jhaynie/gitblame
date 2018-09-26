@@ -225,7 +225,7 @@ func TestBlameLineTooLong(t *testing.T) {
 		return nil
 	}
 	var buf strings.Builder
-	for i := 0; i <= maxLineSize; i++ {
+	for i := 0; i <= MaxLineSize; i++ {
 		buf.WriteString("x")
 	}
 	if err := GenerateOutput(context.Background(), strings.NewReader(buf.String()), callback, nil); err != nil {
